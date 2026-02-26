@@ -570,12 +570,12 @@ function AIAdvisor({ crop, user }) {
   const QUICK = [`Best time to sell ${crop}?`, "Which crops are profitable now?", "How to get MSP?", "Weather impact on prices?", "Cold storage ROI?"];
 
   // Load chat history on mount
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const initialUserName = user.name;
   useEffect(() => {
     load("AgroVue_chat", null).then(stored => {
-      setMsgs(stored || DEFAULT_CHAT(user.name));
+      setMsgs(stored || DEFAULT_CHAT(initialUserName));
     });
-  }, []);
+  }, [initialUserName]);
 
   const send = async (msg = input) => {
     if (!msg.trim() || msgs === null) return;
