@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import {
-  LineChart, Line, AreaChart, Area, BarChart, Bar,
+  Line, Area, BarChart, Bar,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-  ResponsiveContainer, RadarChart, Radar, PolarGrid,
-  PolarAngleAxis, PolarRadiusAxis, ComposedChart
+  ResponsiveContainer, ComposedChart
 } from "recharts";
 
 // ─── DESIGN TOKENS ────────────────────────────────────────────────────────────
@@ -172,7 +171,6 @@ function getLocalFallback(msg, crop) {
     .trim();
   const m   = CROP_META[crop] || { base: 2000, harvest: "varies", season: "varies", vol: 0.1 };
   const tip = CROP_TIPS[crop] || "";
-  const words = q.split(" ");
   const has = (...terms) => terms.reduce((score, t) => score + (q.includes(t) ? 1 : 0), 0);
 
   // Score every intent
@@ -572,6 +570,7 @@ function AIAdvisor({ crop, user }) {
   const QUICK = [`Best time to sell ${crop}?`, "Which crops are profitable now?", "How to get MSP?", "Weather impact on prices?", "Cold storage ROI?"];
 
   // Load chat history on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     load("AgroVue_chat", null).then(stored => {
       setMsgs(stored || DEFAULT_CHAT(user.name));
